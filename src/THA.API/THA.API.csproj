@@ -11,8 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
-    <Folder Include="Extensions\" />
+    <ProjectReference Include="..\THA.Application\THA.Application.csproj" />
   </ItemGroup>
 
 </Project>

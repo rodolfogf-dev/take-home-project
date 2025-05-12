@@ -2,5 +2,5 @@
 
 namespace THA.Application.Persons.GetAll
 {
-    public sealed record GetAllPeopleQuery() : IQuery<List<GetAllPeopleResponse>>;
+    public sealed record GetAllPeopleQuery() : IQuery<List<PersonResponse>>;
 }

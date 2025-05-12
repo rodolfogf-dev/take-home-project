@@ -1,8 +1,8 @@
 ﻿using THA.Domain.Persons;
 
-namespace THA.Application.Persons.GetAll
+namespace THA.Application.Persons
 {
-    public sealed record GetAllPeopleResponse
+    public sealed record PersonResponse
     {
         public Guid Id { get; init; }
         public PersonFullName PersonFullName { get; init; }

@@ -2,18 +2,18 @@
 using THA.Application.Abstractions.Messaging;
 using THA.Common;
 using THA.Domain.Persons;
-using THA.Infra.Data;
+using THA.Infra.Database;
 
 namespace THA.Application.Persons.GetById;
 
 internal sealed class GetPersonByIdQueryHandler(ITakeHomeDbContext context)
-    : IQueryHandler<GetPersonByIdQuery, GetPersonByIdResponse>
+    : IQueryHandler<GetPersonByIdQuery, PersonResponse>
 {
-    public async Task<Result<GetPersonByIdResponse>> Handle(GetPersonByIdQuery query, CancellationToken cancellationToken)
+    public async Task<Result<PersonResponse>> Handle(GetPersonByIdQuery query, CancellationToken cancellationToken)
     {
-        GetPersonByIdResponse? Person = await context.Persons
+        PersonResponse? Person = await context.Persons
             .Where(u => u.Id == query.PersonId)
-            .Select(u => new GetPersonByIdResponse
+            .Select(u => new PersonResponse
             {
                 Id = u.Id,
                 PersonFullName = u.PersonFullName,
@@ -26,7 +26,7 @@ internal sealed class GetPersonByIdQueryHandler(ITakeHomeDbContext context)
             .SingleOrDefaultAsync(cancellationToken);
 
         if (Person is null)       
-            return Result.Failure<GetPersonByIdResponse>(PersonErrors.NotFound(query.PersonId));
+            return Result.Failure<PersonResponse>(PersonErrors.NotFound(query.PersonId));
         
         return Person;
     }

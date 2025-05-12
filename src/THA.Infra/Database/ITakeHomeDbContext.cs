@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using THA.Domain.Persons.Entities;
 
-namespace THA.Infra.Data;
+namespace THA.Infra.Database;
 
 public interface ITakeHomeDbContext
 {

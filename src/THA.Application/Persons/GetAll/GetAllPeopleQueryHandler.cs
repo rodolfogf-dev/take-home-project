@@ -3,18 +3,18 @@ using THA.Application.Abstractions.Messaging;
 using THA.Application.Persons.GetById;
 using THA.Common;
 using THA.Domain.Persons;
-using THA.Infra.Data;
+using THA.Infra.Database;
 
 namespace THA.Application.Persons.GetAll
 {
     class GetAllPeopleQueryHandler(ITakeHomeDbContext context)
-    : IQueryHandler<GetAllPeopleQuery, List<GetAllPeopleResponse>>
+    : IQueryHandler<GetAllPeopleQuery, List<PersonResponse>>
     {
-        public async Task<Result<List<GetAllPeopleResponse>>> Handle(GetAllPeopleQuery query, CancellationToken cancellationToken)
+        public async Task<Result<List<PersonResponse>>> Handle(GetAllPeopleQuery query, CancellationToken cancellationToken)
         {
-            List<GetAllPeopleResponse> persons = await context.Persons
-                .Select(u => new GetAllPeopleResponse
-                    {
+            List<PersonResponse> persons = await context.Persons
+                .Select(u => new PersonResponse
+                {
                     Id = u.Id,
                     PersonFullName = u.PersonFullName,
                     BirthDate = u.BirthDate,

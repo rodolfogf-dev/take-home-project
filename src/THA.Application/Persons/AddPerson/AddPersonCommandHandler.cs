@@ -1,8 +1,8 @@
-﻿using THA.Infra.Data;
-using THA.Common;
+﻿using THA.Common;
 using THA.Domain.Persons.Entities;
 using THA.Domain.Persons.Events;
 using THA.Application.Abstractions.Messaging;
+using THA.Infra.Database;
 
 namespace THA.Application.Persons.AddPerson;
 
