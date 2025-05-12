@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SharedKernel\THA.Common.csproj" />
+    <ProjectReference Include="..\THA.Common\THA.Common.csproj" />
     <ProjectReference Include="..\THA.Domain\THA.Domain.csproj" />
     <ProjectReference Include="..\THA.Infra\THA.Infra.csproj" />
   </ItemGroup>
