@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+	  <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="12.0.0" />
+	  <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.4" />
+	  <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.4" />
+	  <PackageReference Include="Serilog" Version="4.2.0" />
+	  <PackageReference Include="Scrutor" Version="6.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SharedKernel\THA.Common.csproj" />
+    <ProjectReference Include="..\THA.Domain\THA.Domain.csproj" />
+    <ProjectReference Include="..\THA.Infra\THA.Infra.csproj" />
+  </ItemGroup>
+
+</Project>
