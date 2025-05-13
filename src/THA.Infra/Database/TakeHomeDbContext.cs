@@ -6,18 +6,9 @@ using Infrastructure.Database;
 
 namespace THA.Infra.Database;
 
-public sealed class TakeHomeDbContext : DbContext, ITakeHomeDbContext
+public sealed class TakeHomeDbContext(DbContextOptions<TakeHomeDbContext> options,
+        DomainEventsDispatcher domainEventsDispatcher) : DbContext(options), ITakeHomeDbContext
 {
-    private string DbPath { get; set; }
-    public TakeHomeDbContext
-        (DbContextOptions<TakeHomeDbContext> options,
-        DomainEventsDispatcher domainEventsDispatcher) 
-        : base(options)
-    {
-        var folder = Environment.SpecialFolder.LocalApplicationData;
-        var path = Environment.GetFolderPath(folder);
-        DbPath = System.IO.Path.Join(path, "takehomeassignment.db");
-    }
     public DbSet<Person> Persons { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -25,9 +16,6 @@ public sealed class TakeHomeDbContext : DbContext, ITakeHomeDbContext
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(TakeHomeDbContext).Assembly);
         modelBuilder.HasDefaultSchema(Schemas.Default);
     }
-
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder?.UseSqlite($"Data Source={DbPath}");       
     
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {

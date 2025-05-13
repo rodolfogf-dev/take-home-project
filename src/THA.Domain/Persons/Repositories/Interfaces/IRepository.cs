@@ -4,7 +4,7 @@ namespace THA.Domain.Persons.Repositories.Interfaces
 {
     public interface IRepository<T> where T : IEntity
     {
-        T GetById();
-        IList<T> GetAll();
+        Task<T> GetByIdAsync(Guid id);
+        Task<IList<T>> GetAllAsync();
     }
 }

@@ -8,6 +8,7 @@ using THA.Infra.Database;
 using Microsoft.EntityFrameworkCore;
 using Infrastructure.Database;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Microsoft.Extensions.Options;
 
 namespace THA.Infra
 {
@@ -25,8 +26,6 @@ namespace THA.Infra
 
         private static IServiceCollection AddServices(this IServiceCollection services)
         {
-            //services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
-
             services.AddTransient<DomainEventsDispatcher>();
 
             return services;
@@ -34,13 +33,11 @@ namespace THA.Infra
 
         private static IServiceCollection AddDatabase(this IServiceCollection services, IConfiguration configuration)
         {
-            string? connectionString = configuration.GetConnectionString("Database");
+            var folder = Environment.SpecialFolder.LocalApplicationData;
+            var path = Environment.GetFolderPath(folder);
+            var dbpath = System.IO.Path.Join(path, "takehomeassignment.db");
 
-            services.AddDbContext<TakeHomeDbContext>(
-                options => options
-                    .UseNpgsql(connectionString, npgsqlOptions =>
-                        npgsqlOptions.MigrationsHistoryTable(HistoryRepository.DefaultTableName, Schemas.Default))
-                    .UseSnakeCaseNamingConvention());
+            services.AddDbContext<TakeHomeDbContext>(opt => opt.UseSqlite($"Data Source={dbpath}"));
 
             services.AddScoped<ITakeHomeDbContext>(sp => sp.GetRequiredService<TakeHomeDbContext>());
 

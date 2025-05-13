@@ -4,7 +4,6 @@ using THA.API.Infrastructure;
 using THA.Application.Abstractions.Messaging;
 using THA.Application.Persons.AddPerson;
 using THA.Common;
-using THA.Domain.Persons;
 
 namespace THA.API.Endpoints.Persons;
 
