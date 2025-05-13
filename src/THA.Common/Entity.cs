@@ -1,6 +1,6 @@
 ﻿namespace THA.Common;
 
-public abstract class Entity
+public abstract class Entity : IEntity
 {
     private readonly List<IDomainEvent> _domainEvents = [];
 

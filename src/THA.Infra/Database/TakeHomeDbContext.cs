@@ -2,23 +2,33 @@
 using Microsoft.EntityFrameworkCore;
 using THA.Common;
 using THA.Domain.Persons.Entities;
+using Infrastructure.Database;
 
 namespace THA.Infra.Database;
 
-public sealed class TakeHomeDbContext(
-    DbContextOptions<TakeHomeDbContext> options,
-    DomainEventsDispatcher domainEventsDispatcher)
-    : DbContext(options), ITakeHomeDbContext
+public sealed class TakeHomeDbContext : DbContext, ITakeHomeDbContext
 {
+    private string DbPath { get; set; }
+    public TakeHomeDbContext
+        (DbContextOptions<TakeHomeDbContext> options,
+        DomainEventsDispatcher domainEventsDispatcher) 
+        : base(options)
+    {
+        var folder = Environment.SpecialFolder.LocalApplicationData;
+        var path = Environment.GetFolderPath(folder);
+        DbPath = System.IO.Path.Join(path, "takehomeassignment.db");
+    }
     public DbSet<Person> Persons { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(TakeHomeDbContext).Assembly);
-
-        //modelBuilder.HasDefaultSchema(Schemas.Default);
+        modelBuilder.HasDefaultSchema(Schemas.Default);
     }
 
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        => optionsBuilder?.UseSqlite($"Data Source={DbPath}");       
+    
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
         // When should you publish domain events?

@@ -1,4 +1,5 @@
-﻿using THA.API.Extensions;
+﻿using THA.API.Endpoints.Persons.Requests;
+using THA.API.Extensions;
 using THA.API.Infrastructure;
 using THA.Application.Abstractions.Messaging;
 using THA.Application.Persons.AddPerson;
@@ -9,21 +10,11 @@ namespace THA.API.Endpoints.Persons;
 
 internal sealed class AddPerson : IEndpoint
 {
-    public sealed class Request
-    {
-        public Guid Id { get; set; }
-        public PersonFullName PersonFullName { get; set; }
-        public Gender Gender { get; set; }
-        public DateTime BirthDate { get; set; }
-        public string BirthLocation { get; set; }
-        public DateTime? DeathDate { get; set; }
-        public string DeathLocation { get; set; }
-    }
 
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
         app.MapPost("persons", async (
-            Request request,
+            AddPersonRequest request,
             ICommandHandler<AddPersonCommand, Guid> handler,
             CancellationToken cancellationToken) =>
         {
