@@ -1,4 +1,5 @@
-﻿using Microsoft.OpenApi.Models;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.OpenApi.Models;
 
 namespace THA.API.Extensions;
 
@@ -16,11 +17,11 @@ internal static class ServiceCollectionExtensions
                 Description = "Enter your JWT token in this field",
                 In = ParameterLocation.Header,
                 Type = SecuritySchemeType.Http,
-                //Scheme = JwtBearerDefaults.AuthenticationScheme,
+                Scheme = JwtBearerDefaults.AuthenticationScheme,
                 BearerFormat = "JWT"
             };
 
-            //o.AddSecurityDefinition(JwtBearerDefaults.AuthenticationScheme, securityScheme);
+            o.AddSecurityDefinition(JwtBearerDefaults.AuthenticationScheme, securityScheme);
 
             var securityRequirement = new OpenApiSecurityRequirement
             {
@@ -30,16 +31,14 @@ internal static class ServiceCollectionExtensions
                         Reference = new OpenApiReference
                         {
                             Type = ReferenceType.SecurityScheme,
-                            //Id = JwtBearerDefaults.AuthenticationScheme
+                            Id = JwtBearerDefaults.AuthenticationScheme
                         }
                     },
                     []
                 }
             };
-
             o.AddSecurityRequirement(securityRequirement);
         });
-
         return services;
     }
 }

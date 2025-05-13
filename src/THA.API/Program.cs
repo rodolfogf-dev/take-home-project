@@ -1,3 +1,9 @@
+using Serilog;
+using System.Reflection;
+using THA.API;
+using THA.API.Extensions;
+using THA.Application;
+using THA.Infra;
 
 namespace TakeHomeAssignment
 {
@@ -5,27 +11,46 @@ namespace TakeHomeAssignment
     {
         public static void Main(string[] args)
         {
-            var builder = WebApplication.CreateBuilder(args);
+            WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
+            //builder.Host.UseSerilog((context, loggerConfig) => loggerConfig.ReadFrom.Configuration(context.Configuration));
 
-            builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-            builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+            builder.Services.AddSwaggerGenWithAuth();
 
-            var app = builder.Build();
+            builder.Services
+                .AddApplication()
+                .AddPresentation()
+                .AddInfrastructure(builder.Configuration);
 
-            // Configure the HTTP request pipeline.
+            builder.Services.AddEndpoints(Assembly.GetExecutingAssembly());
+
+            WebApplication app = builder.Build();
+
+            app.MapEndpoints();
+
             if (app.Environment.IsDevelopment())
             {
-                app.UseSwagger();
-                app.UseSwaggerUI();
+                app.UseSwaggerWithUi();
+
+                app.ApplyMigrations();
             }
+
+            //app.MapHealthChecks("health", new HealthCheckOptions
+            //{
+            //    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+            //});
+
+            app.UseRequestContextLogging();
+
+            //app.UseSerilogRequestLogging();
+
+            app.UseExceptionHandler();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 
-
+            // REMARK: If you want to use Controllers, you'll need this.
             app.MapControllers();
 
             app.Run();
