@@ -12,18 +12,22 @@ internal sealed class GetById : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapGet("persons/{id:guid}", async (
+        app.MapGet("/{id:guid}", async (
             [FromHeader(Name = "x-client-id")] string customHeader,
             Guid id,
             IQueryHandler<GetPersonByIdQuery, PersonResponse> handler,
             CancellationToken cancellationToken) =>
         {
+            if (customHeader is null)
+                return Results.BadRequest();
+            if (customHeader != HttpConstants.Validkey)
+                return Results.Unauthorized();
+
             var query = new GetPersonByIdQuery(id);
 
             Result<PersonResponse> result = await handler.Handle(query, cancellationToken);
             return result.Match(Results.Ok, CustomResults.Problem);
         })
         .WithTags(Tags.Persons);
-        //.RequireAuthorization();
     }
 }

@@ -12,13 +12,18 @@ namespace THA.API.Endpoints.Persons
     {
         public void MapEndpoint(IEndpointRouteBuilder app)
         {
-            app.MapPost("persons/{id:guid}/record-birth", async (
+            app.MapPost("/{id:guid}/record-birth", async (
                 [FromHeader(Name = "x-client-id")] string customHeader,
                 Guid id,
                 RecordBirthRequest request,
                 ICommandHandler<RecordBirthCommand, Guid> handler,
                 CancellationToken cancellationToken) =>
             {
+                if (customHeader is null)
+                    return Results.BadRequest();
+                if (customHeader != HttpConstants.Validkey)
+                    return Results.Unauthorized();
+
                 var command = new RecordBirthCommand
                 {
                     PersonId = id,
@@ -30,7 +35,6 @@ namespace THA.API.Endpoints.Persons
                 return result.Match(Results.Ok, CustomResults.Problem);
             })
             .WithTags(Tags.Persons);
-            //.RequireAuthorization();
         }
     }
 }

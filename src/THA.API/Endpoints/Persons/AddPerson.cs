@@ -13,16 +13,16 @@ internal sealed class AddPerson : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapPost("persons", async (
+        app.MapPost("/", async (
             [FromHeader(Name = "x-client-id")] string customHeader,
             AddPersonRequest request,
             ICommandHandler<AddPersonCommand, Guid> handler,
             CancellationToken cancellationToken) =>
         {
-            //if (customHeader is null)
-            //    return 
-            //if (customHeader == "1111")
-            //    return Result.Failure<Guid>(PersonErrors.Unauthorized()).Match(Results.Ok, CustomResults.Problem);
+            if (customHeader is null)
+                return Results.BadRequest();
+            if(customHeader != HttpConstants.Validkey)
+                return Results.Unauthorized();
 
             var command = new AddPersonCommand
             {
@@ -36,6 +36,5 @@ internal sealed class AddPerson : IEndpoint
             return result.Match(Results.Ok, CustomResults.Problem);
         })
         .WithTags(Tags.Persons);
-        //.RequireAuthorization();
     }
 }

@@ -12,17 +12,21 @@ internal sealed class GetAll : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapGet("persons", async (
+        app.MapGet("/", async (
             [FromHeader(Name = "x-client-id")] string customHeader,
             IQueryHandler <GetAllPeopleQuery, List<PersonResponse>> handler,
             CancellationToken cancellationToken) =>
         {
+            if (customHeader is null)
+                return Results.BadRequest();
+            if (customHeader != HttpConstants.Validkey)
+                return Results.Unauthorized();
+
             var query = new GetAllPeopleQuery();
 
             Result<List<PersonResponse>> result = await handler.Handle(query, cancellationToken);
             return result.Match(Results.Ok, CustomResults.Problem);
         })
         .WithTags(Tags.Persons);
-        //.RequireAuthorization();
     }
 }
