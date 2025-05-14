@@ -26,23 +26,20 @@ public static class EndpointExtensions
         RouteGroupBuilder? routeGroupBuilder = null)
     {
         IEnumerable<IEndpoint> endpoints = app.Services.GetRequiredService<IEnumerable<IEndpoint>>();
-
         IEndpointRouteBuilder builder = routeGroupBuilder is null ? app : routeGroupBuilder;
-
 
         var groupBuilder = builder.MapGroup("/persons").AddEndpointFilter(
             async (context, next) =>
             {
                 var headerKey = context.HttpContext.Request.Headers["x-client-id"];
-                if (headerKey != HttpConstants.Validkey)
-                {
-                    context.HttpContext.Response.StatusCode = 401;
-                    context.HttpContext.Response.WriteAsync("Access denied!");
+                
+                if(headerKey == "")
                     return Results.BadRequest();
-                }
+                if (headerKey != HttpConstants.Validkey)                
+                    return Results.Unauthorized();    
+                
                 return await next(context);
             });
-
 
         foreach (IEndpoint endpoint in endpoints)
         {
