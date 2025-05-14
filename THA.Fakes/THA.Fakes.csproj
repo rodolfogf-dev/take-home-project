@@ -11,8 +11,4 @@
     <ProjectReference Include="..\src\THA.Domain\THA.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Persons\Queries\" />
-  </ItemGroup>
-
 </Project>

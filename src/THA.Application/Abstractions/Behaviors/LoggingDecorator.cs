@@ -30,7 +30,7 @@ public static class LoggingDecorator
         }
     }
 
-    internal sealed class QueryHandler<TQuery, TResponse>(
+    public sealed class QueryHandler<TQuery, TResponse>(
         IQueryHandler<TQuery, TResponse> inner,
         ILogger<QueryHandler<TQuery, TResponse>> logger)
         : IQueryHandler<TQuery, TResponse> where TQuery : IQuery<TResponse>

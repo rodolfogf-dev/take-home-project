@@ -1,5 +1,3 @@
-using Microsoft.Extensions.DependencyInjection;
-
 namespace THA.Application.Tests
 {
     public class TestBase

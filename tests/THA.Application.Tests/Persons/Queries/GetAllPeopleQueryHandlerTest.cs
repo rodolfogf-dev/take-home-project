@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace THA.Application.Tests.Persons.Queries
+﻿namespace THA.Application.Tests.Persons.Queries
 {
-    internal class GetAllPeopleQueryHandlerTest
+    [TestFixture]
+    public class GetAllPeopleQueryHandlerTest
     {
+        //.
+        //.
+        //.
+        //[Test]
+        //public async Task Should_.....()
     }
 }

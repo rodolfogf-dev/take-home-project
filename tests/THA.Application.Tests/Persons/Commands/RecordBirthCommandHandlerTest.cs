@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace THA.Application.Tests.Persons.Commands
+﻿namespace THA.Application.Tests.Persons.Commands
 {
-    internal class RecordBirthCommandHandlerTest
+    [TestFixture]
+    public class RecordBirthCommandHandlerTest
     {
+        //.
+        //.
+        //.
+        //[Test]
+        //public async Task Should_.....()
     }
 }

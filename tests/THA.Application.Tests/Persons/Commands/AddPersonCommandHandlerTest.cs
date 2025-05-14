@@ -27,7 +27,7 @@ namespace THA.Application.Tests.Persons.Commands
         public void Setup()
         {
             _personIdDefault = Guid.NewGuid();
-            _services = new ServiceCollection();
+            _services = [];
             _services.AddApplication();
 
             _personRepository = Substitute.For<IPersonRepository>();
@@ -35,15 +35,13 @@ namespace THA.Application.Tests.Persons.Commands
 
             _services.Replace(new ServiceDescriptor(typeof(IPersonRepository), _ => _personRepository, ServiceLifetime.Scoped));
             _services.AddScoped(_ => Substitute.For<ILogger<LoggingDecorator.CommandHandler<AddPersonCommand, Guid>>>());
-            _serviceProvider = _services.BuildServiceProvider();            
+            _serviceProvider = _services.BuildServiceProvider();
         }
 
         [OneTimeTearDown]
         public async Task TearDown()
-        {
-            await _serviceProvider.DisposeAsync();
-        }
-
+            => await _serviceProvider.DisposeAsync();
+        
         [Test]
         public async Task Should_Add_Person_Returns_PersonId()
         {
@@ -59,5 +57,12 @@ namespace THA.Application.Tests.Persons.Commands
             await _personRepository.Received(1).AddAsync(Arg.Any<Person>());
             Assert.That(result.Value, Is.EqualTo(_personIdDefault));
         }
-    }
+
+        //.
+        //.
+        //.
+        //[Test]
+        //public async Task Should_Throw_.....()
+
+    }    
 }

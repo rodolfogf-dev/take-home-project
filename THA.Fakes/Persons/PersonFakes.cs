@@ -10,9 +10,9 @@ namespace THA.Fakes.Persons
             {
                 PersonFullName = new PersonFullName("Rodolfo", "Gomes"),
                 Gender = Gender.Female,
-                BirthDate = DateTime.Now,
+                BirthDate = GetDateTimeDefault(),
                 BirthLocation = "Recife",
-                DeathDate = DateTime.Now,
+                DeathDate = GetDateTimeDefault(),
                 DeathLocation = "Recife 2"
             };
 
@@ -21,12 +21,14 @@ namespace THA.Fakes.Persons
             {
                 PersonFullName = null,
                 Gender = Gender.Female,
-                BirthDate = DateTime.Now,
+                BirthDate = GetDateTimeDefault(),
                 BirthLocation = "Recife",
-                DeathDate = DateTime.Now,
+                DeathDate = GetDateTimeDefault(),
                 DeathLocation = "Recife 2"
             };
 
-
+        public static DateTime GetDateTimeDefault()
+            => DateTime.ParseExact("2025-05-14 12:00:00,000", "yyyy-MM-dd HH:mm:ss,fff",
+                       System.Globalization.CultureInfo.InvariantCulture);
     }
 }
