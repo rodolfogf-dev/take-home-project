@@ -1,4 +1,5 @@
-﻿using THA.API.Endpoints.Common;
+﻿using Microsoft.AspNetCore.Mvc;
+using THA.API.Endpoints.Common;
 using THA.API.Extensions;
 using THA.Application.Abstractions.Messaging;
 using THA.Application.Persons;
@@ -12,7 +13,8 @@ internal sealed class GetAll : IEndpoint
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
         app.MapGet("persons", async (
-            IQueryHandler<GetAllPeopleQuery, List<PersonResponse>> handler,
+            [FromHeader(Name = "x-client-id")] string customHeader,
+            IQueryHandler <GetAllPeopleQuery, List<PersonResponse>> handler,
             CancellationToken cancellationToken) =>
         {
             var query = new GetAllPeopleQuery();

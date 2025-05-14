@@ -1,4 +1,5 @@
-﻿using THA.API.Endpoints.Common;
+﻿using Microsoft.AspNetCore.Mvc;
+using THA.API.Endpoints.Common;
 using THA.API.Extensions;
 using THA.Application.Abstractions.Messaging;
 using THA.Application.Persons;
@@ -12,6 +13,7 @@ internal sealed class GetById : IEndpoint
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
         app.MapGet("persons/{id:guid}", async (
+            [FromHeader(Name = "x-client-id")] string customHeader,
             Guid id,
             IQueryHandler<GetPersonByIdQuery, PersonResponse> handler,
             CancellationToken cancellationToken) =>

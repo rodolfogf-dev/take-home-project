@@ -1,4 +1,5 @@
-﻿using THA.API.Endpoints.Common;
+﻿using Microsoft.AspNetCore.Mvc;
+using THA.API.Endpoints.Common;
 using THA.API.Endpoints.Persons.Requests;
 using THA.API.Extensions;
 using THA.Application.Abstractions.Messaging;
@@ -12,6 +13,7 @@ namespace THA.API.Endpoints.Persons
         public void MapEndpoint(IEndpointRouteBuilder app)
         {
             app.MapPost("persons/{id:guid}/record-birth", async (
+                [FromHeader(Name = "x-client-id")] string customHeader,
                 Guid id,
                 RecordBirthRequest request,
                 ICommandHandler<RecordBirthCommand, Guid> handler,
