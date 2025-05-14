@@ -6,7 +6,7 @@ using THA.Domain.Persons.Repositories.Interfaces;
 
 namespace THA.Application.Persons.AddPerson;
 
-internal sealed class AddPersonCommandHandler(
+public sealed class AddPersonCommandHandler(
         IPersonRepository _personRepository)
 : ICommandHandler<AddPersonCommand, Guid>
 {
@@ -22,11 +22,11 @@ internal sealed class AddPersonCommandHandler(
             DeathLocation = command.DeathLocation
         };
 
-        await _personRepository.AddAsync(person);
+        var id = await _personRepository.AddAsync(person);
 
         person.Raise(new PersonAddedDomainEvent(person.Id));
 
-        return person.Id;
+        return id;
     }
 }
 

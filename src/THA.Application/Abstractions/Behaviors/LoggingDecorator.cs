@@ -4,33 +4,9 @@ using THA.Application.Abstractions.Messaging;
 
 namespace THA.Application.Abstractions.Behaviors;
 
-internal static class LoggingDecorator
+public static class LoggingDecorator
 {
-    internal sealed class CommandBaseHandler<TCommand>(
-        ICommandHandler<TCommand> inner,
-        ILogger<CommandBaseHandler<TCommand>> logger)
-        : ICommandHandler<TCommand> where TCommand : ICommand
-    {
-        public async Task<Result> Handle(TCommand command, CancellationToken cancellationToken)
-        {
-            logger.LogInformation("Processing command {CommandName}", typeof(TCommand).Name);
-
-            Result result = await inner.Handle(command, cancellationToken);
-
-            if (result.IsSuccess)
-            {
-                logger.LogInformation("Completed command {CommandName}", typeof(TCommand).Name);
-            }
-            else
-            {
-                logger.LogError("Completed command {CommandName} with error", typeof(TCommand).Name);
-            }
-
-            return result;
-        }
-    }
-
-    internal sealed class CommandHandler<TCommand, TResponse>(
+    public sealed class CommandHandler<TCommand, TResponse>(
         ICommandHandler<TCommand, TResponse> inner,
         ILogger<CommandHandler<TCommand, TResponse>> logger)
         : ICommandHandler<TCommand, TResponse> where TCommand : ICommand<TResponse>
