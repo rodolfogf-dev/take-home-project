@@ -2,14 +2,14 @@
 
 namespace THA.Application.Persons
 {
-    public sealed record PersonResponse
+    public sealed class PersonResponse
     {
-        public Guid Id { get; init; }
-        public PersonFullName PersonFullName { get; init; }
-        public Gender Gender { get; init; }
-        public DateTime BirthDate { get; init; }
-        public string BirthLocation { get; init; }
-        public DateTime? DeathDate { get; init; }
-        public string DeathLocation { get; init; }
+        public Guid Id { get; set; }
+        public PersonFullName PersonFullName { get; set; }
+        public Gender Gender { get; set; }
+        public DateTime BirthDate { get; set; }
+        public string BirthLocation { get; set; }
+        public DateTime? DeathDate { get; set; }
+        public string DeathLocation { get; set; }
     }
 }

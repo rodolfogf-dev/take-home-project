@@ -6,9 +6,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using THA.Infra.Database;
 using Microsoft.EntityFrameworkCore;
-using Infrastructure.Database;
-using Microsoft.EntityFrameworkCore.Migrations;
-using Microsoft.Extensions.Options;
+using THA.Infra.Repositories;
+using THA.Domain.Persons.Repositories.Interfaces;
 
 namespace THA.Infra
 {
@@ -32,15 +31,9 @@ namespace THA.Infra
         }
 
         private static IServiceCollection AddDatabase(this IServiceCollection services, IConfiguration configuration)
-        {
-            var folder = Environment.SpecialFolder.LocalApplicationData;
-            var path = Environment.GetFolderPath(folder);
-            var dbpath = System.IO.Path.Join(path, "takehomeassignment.db");
-
-            services.AddDbContext<TakeHomeDbContext>(opt => opt.UseSqlite($"Data Source={dbpath}"));
-
-            services.AddScoped<ITakeHomeDbContext>(sp => sp.GetRequiredService<TakeHomeDbContext>());
-
+        {            
+            services.AddScoped<ITakeHomeDbContext, TakeHomeDbContext>();
+            services.AddScoped<IPersonRepository, PersonRepository>();
             return services;
         }
 

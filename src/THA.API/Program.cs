@@ -1,9 +1,11 @@
-using Serilog;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System.Reflection;
 using THA.API;
 using THA.API.Extensions;
 using THA.Application;
 using THA.Infra;
+using THA.Infra.Database;
 
 namespace TakeHomeAssignment
 {
@@ -21,6 +23,8 @@ namespace TakeHomeAssignment
                 .AddApplication()
                 .AddPresentation()
                 .AddInfrastructure(builder.Configuration);
+
+            builder.Services.AddDbContext<TakeHomeDbContext>(opt => opt.UseSqlServer("data source=SEVERINO;initial catalog=development;Integrated Security=True;TrustServerCertificate=True"));
 
             builder.Services.AddEndpoints(Assembly.GetExecutingAssembly());
 

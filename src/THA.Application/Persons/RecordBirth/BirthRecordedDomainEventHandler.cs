@@ -1,6 +1,6 @@
 ﻿namespace THA.Application.Persons.RecordBirth
 {
-    class BirthRecordedDomainEventHandlerc 
+    class BirthRecordedDomainEventHandler 
     {
     }
 }

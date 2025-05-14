@@ -3,16 +3,19 @@ using THA.Application.Abstractions.Messaging;
 using THA.Application.Persons.GetById;
 using THA.Common;
 using THA.Domain.Persons;
+using THA.Domain.Persons.Entities;
+using THA.Domain.Persons.Repositories.Interfaces;
 using THA.Infra.Database;
 
 namespace THA.Application.Persons.GetAll
 {
-    class GetAllPeopleQueryHandler(ITakeHomeDbContext context)
+    class GetAllPeopleQueryHandler(IPersonRepository _personRepository)
     : IQueryHandler<GetAllPeopleQuery, List<PersonResponse>>
     {
         public async Task<Result<List<PersonResponse>>> Handle(GetAllPeopleQuery query, CancellationToken cancellationToken)
         {
-            List<PersonResponse> persons = await context.Persons
+            List<Person> persons = await _personRepository.GetAllAsync();
+            List<PersonResponse> response = persons
                 .Select(u => new PersonResponse
                 {
                     Id = u.Id,
@@ -23,9 +26,9 @@ namespace THA.Application.Persons.GetAll
                     DeathLocation = u.DeathLocation,
                     Gender = u.Gender
                 })
-                .ToListAsync(cancellationToken);
+                .ToList();
 
-            return persons;
+            return response;
         }
     }
 }

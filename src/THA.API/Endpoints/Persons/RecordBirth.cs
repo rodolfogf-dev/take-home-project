@@ -20,7 +20,8 @@ namespace THA.API.Endpoints.Persons
                 var command = new RecordBirthCommand
                 {
                     PersonId = id,
-                    BirthDate = request.DeathDate,
+                    BirthDate = request.BirthDate,
+                    BirthLocation = request.BirthLocation
                 };
 
                 Result<Guid> result = await handler.Handle(command, cancellationToken);

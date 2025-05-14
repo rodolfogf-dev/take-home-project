@@ -2,12 +2,12 @@
 using THA.Domain.Persons.Entities;
 using THA.Domain.Persons.Events;
 using THA.Application.Abstractions.Messaging;
-using THA.Infra.Database;
+using THA.Domain.Persons.Repositories.Interfaces;
 
 namespace THA.Application.Persons.AddPerson;
 
 internal sealed class AddPersonCommandHandler(
-        ITakeHomeDbContext context)
+        IPersonRepository _personRepository)
 : ICommandHandler<AddPersonCommand, Guid>
 {
     public async Task<Result<Guid>> Handle(AddPersonCommand command, CancellationToken cancellationToken)
@@ -22,9 +22,7 @@ internal sealed class AddPersonCommandHandler(
             DeathLocation = command.DeathLocation
         };
 
-        context.Persons.Add(person);
-
-        await context.SaveChangesAsync(cancellationToken);
+        await _personRepository.AddAsync(person);
 
         person.Raise(new PersonAddedDomainEvent(person.Id));
 

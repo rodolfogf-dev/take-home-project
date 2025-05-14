@@ -1,20 +1,20 @@
-﻿using THA.Infra.DomainEvents;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using THA.Common;
 using THA.Domain.Persons.Entities;
-using Infrastructure.Database;
-
 namespace THA.Infra.Database;
 
-public sealed class TakeHomeDbContext(DbContextOptions<TakeHomeDbContext> options,
-        DomainEventsDispatcher domainEventsDispatcher) : DbContext(options), ITakeHomeDbContext
+public class TakeHomeDbContext: DbContext, ITakeHomeDbContext
 {
+    public TakeHomeDbContext(DbContextOptions<TakeHomeDbContext> options) : base(options)
+    {
+
+    }
     public DbSet<Person> Persons { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(TakeHomeDbContext).Assembly);
-        modelBuilder.HasDefaultSchema(Schemas.Default);
+        modelBuilder.Entity<Person>().ComplexProperty(p => p.PersonFullName);
     }
     
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
@@ -51,6 +51,6 @@ public sealed class TakeHomeDbContext(DbContextOptions<TakeHomeDbContext> option
             })
             .ToList();
 
-        await domainEventsDispatcher.DispatchAsync(domainEvents);
+        //await domainEventsDispatcher.DispatchAsync(domainEvents);
     }
 }
