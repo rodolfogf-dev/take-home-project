@@ -18,12 +18,11 @@ namespace TakeHomeAssignment
             builder.Services.AddSwaggerGenWithAuth();
 
             builder.Services
-                .AddApplication()
                 .AddPresentation()
+                .AddApplication()
                 .AddInfrastructure(builder.Configuration);
 
             
-
             builder.Services.AddEndpoints(Assembly.GetExecutingAssembly());
 
             WebApplication app = builder.Build();
@@ -37,11 +36,6 @@ namespace TakeHomeAssignment
                 app.ApplyMigrations();
             }
 
-            //app.MapHealthChecks("health", new HealthCheckOptions
-            //{
-            //    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
-            //});
-
             app.UseRequestContextLogging();
 
             app.UseSerilogRequestLogging();
@@ -52,7 +46,6 @@ namespace TakeHomeAssignment
 
             app.UseAuthorization();
 
-            // REMARK: If you want to use Controllers, you'll need this.
             app.MapControllers();
 
             app.Run();
