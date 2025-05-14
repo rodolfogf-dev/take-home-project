@@ -1,5 +1,5 @@
-﻿using THA.API.Extensions;
-using THA.API.Infrastructure;
+﻿using THA.API.Endpoints.Common;
+using THA.API.Extensions;
 using THA.Application.Abstractions.Messaging;
 using THA.Application.Persons;
 using THA.Application.Persons.GetAll;

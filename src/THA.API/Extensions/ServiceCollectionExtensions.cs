@@ -14,7 +14,7 @@ internal static class ServiceCollectionExtensions
             var securityScheme = new OpenApiSecurityScheme
             {
                 Name = "JWT Authentication",
-                Description = "Enter your JWT token in this field",
+                Description = "Enter your JWT token here",
                 In = ParameterLocation.Header,
                 Type = SecuritySchemeType.Http,
                 Scheme = JwtBearerDefaults.AuthenticationScheme,

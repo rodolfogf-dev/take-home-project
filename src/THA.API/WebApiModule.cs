@@ -1,4 +1,4 @@
-﻿using THA.API.Infrastructure;
+﻿using THA.API.Endpoints.Common;
 
 namespace THA.API
 {

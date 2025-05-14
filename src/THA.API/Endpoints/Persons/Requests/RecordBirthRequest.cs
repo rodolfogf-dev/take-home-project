@@ -4,6 +4,6 @@
     {
         public Guid PersonId { get; set; }
         public DateTime BirthDate { get; set; }
-        public string BirthLocation { get; set; }
+        public required string BirthLocation { get; set; }
     }
 }

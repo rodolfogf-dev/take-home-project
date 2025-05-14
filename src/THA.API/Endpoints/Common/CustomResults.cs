@@ -1,6 +1,6 @@
 ﻿using THA.Common;
 
-namespace THA.API.Infrastructure;
+namespace THA.API.Endpoints.Common;
 
 public static class CustomResults
 {

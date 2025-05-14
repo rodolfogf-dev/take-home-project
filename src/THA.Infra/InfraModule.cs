@@ -26,12 +26,12 @@ namespace THA.Infra
         private static IServiceCollection AddServices(this IServiceCollection services)
         {
             services.AddTransient<DomainEventsDispatcher>();
-
             return services;
         }
 
         private static IServiceCollection AddDatabase(this IServiceCollection services, IConfiguration configuration)
-        {            
+        {
+            services.AddDbContext<TakeHomeDbContext>(opt => opt.UseSqlServer("data source=SEVERINO;initial catalog=development;Integrated Security=True;TrustServerCertificate=True"));
             services.AddScoped<ITakeHomeDbContext, TakeHomeDbContext>();
             services.AddScoped<IPersonRepository, PersonRepository>();
             return services;
@@ -39,10 +39,6 @@ namespace THA.Infra
 
         private static IServiceCollection AddHealthChecks(this IServiceCollection services, IConfiguration configuration)
         {
-            //services
-            //    .AddHealthChecks()
-            //    .AddNpgSql(configuration.GetConnectionString("Database")!);
-
             return services;
         }
 
@@ -68,14 +64,6 @@ namespace THA.Infra
 
         private static IServiceCollection AddAuthorizationInternal(this IServiceCollection services)
         {
-            //services.AddAuthorization();
-
-            //services.AddScoped<PermissionProvider>();
-
-            //services.AddTransient<IAuthorizationHandler, PermissionAuthorizationHandler>();
-
-            //services.AddTransient<IAuthorizationPolicyProvider, PermissionAuthorizationPolicyProvider>();
-
             return services;
         }
     }

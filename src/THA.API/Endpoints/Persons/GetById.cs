@@ -1,5 +1,5 @@
-﻿using THA.API.Extensions;
-using THA.API.Infrastructure;
+﻿using THA.API.Endpoints.Common;
+using THA.API.Extensions;
 using THA.Application.Abstractions.Messaging;
 using THA.Application.Persons;
 using THA.Application.Persons.GetById;
@@ -16,9 +16,9 @@ internal sealed class GetById : IEndpoint
             IQueryHandler<GetPersonByIdQuery, PersonResponse> handler,
             CancellationToken cancellationToken) =>
         {
-            var command = new GetPersonByIdQuery(id);
+            var query = new GetPersonByIdQuery(id);
 
-            Result<PersonResponse> result = await handler.Handle(command, cancellationToken);
+            Result<PersonResponse> result = await handler.Handle(query, cancellationToken);
             return result.Match(Results.Ok, CustomResults.Problem);
         })
         .WithTags(Tags.Persons);

@@ -7,13 +7,9 @@ using THA.Infra.Database;
 
 namespace THA.Infra.Repositories
 {
-    public class PersonRepository : IPersonRepository
+    public class PersonRepository(ITakeHomeDbContext dbcontext) : IPersonRepository
     {
-        private readonly ITakeHomeDbContext _Dbcontext;
-        public PersonRepository(ITakeHomeDbContext dbcontext)
-        {
-            _Dbcontext = dbcontext;
-        }
+        private readonly ITakeHomeDbContext _Dbcontext = dbcontext;
 
         public async Task<List<Person>> GetAllAsync()
             => await _Dbcontext.Persons.Select(p => new Person()
@@ -27,7 +23,9 @@ namespace THA.Infra.Repositories
             }).ToListAsync();
 
         public async Task<Person> GetByIdAsync(Guid personId)
-            => await _Dbcontext.Persons.FirstOrDefaultAsync(x => x.Id == personId);
+        {
+            return await _Dbcontext.Persons.FirstOrDefaultAsync(x => x.Id == personId);
+        }
 
         public async Task<Guid> AddAsync(Person person)
         {
