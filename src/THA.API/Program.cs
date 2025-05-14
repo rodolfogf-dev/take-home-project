@@ -1,11 +1,10 @@
 using System.Reflection;
-using THA.API;
 using THA.API.Extensions;
 using THA.Application;
 using THA.Infra;
 using Serilog;
 
-namespace TakeHomeAssignment
+namespace THA.API
 {
     public class Program
     {
