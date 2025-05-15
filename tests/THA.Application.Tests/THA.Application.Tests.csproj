@@ -22,7 +22,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\THA.Application\THA.Application.csproj" />
-    <ProjectReference Include="..\..\THA.Fakes\THA.Fakes.csproj" />
+    <ProjectReference Include="..\THA.Fakes\THA.Fakes.csproj" />
   </ItemGroup>
 
   <ItemGroup>
