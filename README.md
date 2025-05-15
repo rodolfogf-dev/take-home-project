@@ -24,6 +24,7 @@ For this challenge I choose to use the following principles:
 - Add missing implementations (DomainEvents, Healtcheks..)
 - Refactoring code smells and bad constant usage (sql connection string in appsettings, remove hardcorded values..)
 - Add missing relevant tests
+- Add better endpoint structure
 
 # Usage:
 For all requests please use "12345" as x-client-id
