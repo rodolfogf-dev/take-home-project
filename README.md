@@ -1,4 +1,4 @@
-# TakeHomeAssignment
+# TakeHomeAssignment :computer:
 Hi, here's the code project related to [vigil's take home assignment](https://github.com/new-ft/aspnet-take-home-assignment)
 For this challenge I choose to use the following principles:
 - Clean Arch & DDD: folder structures & organization were based towards the "Person" entity and any events related to it;
