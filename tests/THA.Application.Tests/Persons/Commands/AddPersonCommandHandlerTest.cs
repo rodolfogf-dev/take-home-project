@@ -1,10 +1,7 @@
-﻿using Azure;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
-using Serilog;
-using System;
 using THA.Application.Abstractions.Behaviors;
 using THA.Application.Abstractions.Messaging;
 using THA.Application.Persons.AddPerson;
