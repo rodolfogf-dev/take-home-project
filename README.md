@@ -1,5 +1,5 @@
 # TakeHomeAssignment :computer:
-Hi, here's the code project related to [vigil's take home assignment](https://github.com/new-ft/aspnet-take-home-assignment)
+Hi, I'm Rodolfo (rodolfogf.dev@gmail.com) and here's the code project related to [vigil's take home assignment](https://github.com/new-ft/aspnet-take-home-assignment)
 For this challenge I choose to use the following principles:
 - Clean Arch & DDD: folder structures & organization were based towards the "Person" entity and any events related to it;
 - CRQS: Used to process commands/queries spliting based on use cases ("addPerson", "getall", etc..);
@@ -15,8 +15,7 @@ For this challenge I choose to use the following principles:
 ## How to run the project
 
 - After downloading the project, please open the .sln file (TakeHomeAssignment.sln) using visual studio;
-- Click on "Docker Compose" command: ![image](https://github.com/user-attachments/assets/fd7a181c-49a6-4990-b851-d614a0109c56)
-
+- Click on "Docker Compose" command, or initiate it by docker-compose project;
 - The project will create the respective docker images and container on the background.
 - The sql database will be available at "localhost, 1433"
 
