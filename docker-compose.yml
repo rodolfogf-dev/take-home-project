@@ -1,18 +1,22 @@
 services:
-  sqlserver:
-    image: mcr.microsoft.com/mssql/server:2022-latest
-    environment:
-        - ACCEPT_EULA=Y
-        - MSSQL_SA_PASSWORD=sua-senhaaqui#789
-        - MSSQL_DATABASE=ThaVigil 
-    ports:
-        - "1433:1433"
-    volumes:
-        - D:\DATA\volumes\sqlserver:/var/opt/mssql/data
   tha.api:
+    ports:
+      - 8080:8080
+    container_name: tha-api-container
     image: ${DOCKER_REGISTRY-}thaapi
     build:
       context: .
       dockerfile: src/THA.API/Dockerfile
-
-    
+      target: tha.api
+    depends_on:
+        - sqlserver
+  sqlserver:
+    container_name: sqlserver
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    ports:
+      - 1433:1433
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=Password_123
+      - MSSQL_PID=Developer
+      - MSSQL_USER=SA

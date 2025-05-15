@@ -22,7 +22,7 @@ namespace THA.Infra
 
         private static IServiceCollection AddDatabase(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<TakeHomeDbContext>(opt => opt.UseSqlServer("data source=SEVERINO;initial catalog=development;Integrated Security=True;TrustServerCertificate=True"));
+            services.AddDbContext<TakeHomeDbContext>(opt => opt.UseSqlServer("Data Source=sqlserver,1433; Initial Catalog=THA; User Id=sa; Password=Password_123;Encrypt=false;TrustServerCertificate=true;"));                    
             services.AddScoped<ITakeHomeDbContext, TakeHomeDbContext>();
             services.AddScoped<IPersonRepository, PersonRepository>();
             return services;
