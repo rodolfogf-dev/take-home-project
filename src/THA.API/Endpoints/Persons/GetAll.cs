@@ -17,11 +17,6 @@ internal sealed class GetAll : IEndpoint
             IQueryHandler <GetAllPeopleQuery, List<PersonResponse>> handler,
             CancellationToken cancellationToken) =>
         {
-            if (customHeader is null)
-                return Results.BadRequest();
-            if (customHeader != HttpConstants.Validkey)
-                return Results.Unauthorized();
-
             var query = new GetAllPeopleQuery();
 
             Result<List<PersonResponse>> result = await handler.Handle(query, cancellationToken);

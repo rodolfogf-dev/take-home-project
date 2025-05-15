@@ -19,11 +19,6 @@ internal sealed class AddPerson : IEndpoint
             ICommandHandler<AddPersonCommand, Guid> handler,
             CancellationToken cancellationToken) =>
         {
-            if (customHeader is null)
-                return Results.BadRequest();
-            if(customHeader != HttpConstants.Validkey)
-                return Results.Unauthorized();
-
             var command = new AddPersonCommand
             {
                 PersonFullName = request.PersonFullName,
